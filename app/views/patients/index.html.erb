@@ -1,3 +1,39 @@
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.23/themes/base/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+
+<!-- <form action="<%= patients_path%>">
+  <%#= select_tag "gender", options_for_select([["Select" , "" ]] + ['Male', 'Female']) %>
+  <button class="btn btn-primary">Get Data</button>
+</form> -->
+<!-- <hr> -->
+
+
+<form action="<%= filterd_by_date_patients_path%>">
+  <input type="text" name="from" id="datepicker1" placeholder="From Date">
+  <input type="text" name="till" id="datepicker" placeholder="To Date">
+  <button class="btn btn-primary m_bottom10">Get Data</button>
+</form>
+
+
+<form class="">
+  <label>Select a formate to Import</label>
+  <%= select_tag "import_to", options_for_select([["Select" , "" ]] + ['pdf', 'csv','excel', 'json']) %>
+  <button class="btn btn-success m_bottom10">Import</button>
+</form>
+
+
+
+<script>
+$(function() {
+$( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
+$( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
+});
+</script>
+
+
+
 <%- model_class = Patient -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
