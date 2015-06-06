@@ -6,26 +6,16 @@ class PatientsController < ApplicationController
   def index
 
     @patients = Patient.all
-    # byebug
-
-
     if params.include?(:gender) and !params[:gender].blank?
       @patients = Patient.gender_vise(params[:gender])
     end
-    # byebug
-
-   # booked.where("(start_date <= ? AND end_date >= ?) OR (start_date <= ? AND end_date >= ?)"
-    # Patient.where("dob >= ?", params[:from]).count
   end
 
 
   def filterd_by_date
-    # byebug
-
     @patients = Patient.where("created_at >= ? and created_at <= ?", params[:from], params[:till] ).order("id asc")
+    @show_import = true unless @patients.blank?
     render 'index'
-
-    
   end
 
   # GET /patients/1

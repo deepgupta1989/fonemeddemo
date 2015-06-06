@@ -16,13 +16,13 @@
   <button class="btn btn-primary m_bottom10">Get Data</button>
 </form>
 
-
+<%if @show_import%>
 <form class="">
   <label>Select a formate to Import</label>
   <%= select_tag "import_to", options_for_select([["Select" , "" ]] + ['pdf', 'csv','excel', 'json']) %>
   <button class="btn btn-success m_bottom10">Import</button>
 </form>
-
+<%end%>
 
 
 <script>
