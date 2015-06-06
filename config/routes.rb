@@ -1,4 +1,10 @@
 FonemedPdf::Application.routes.draw do
+  resources :patients do
+    collection do
+      get 'filterd_by_date'
+    end
+  end
+
   root 'home#index'
   get "home/index"
   # The priority is based upon order of creation: first created -> highest priority.

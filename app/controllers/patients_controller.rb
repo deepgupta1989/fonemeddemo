@@ -5,10 +5,12 @@ class PatientsController < ApplicationController
   # GET /patients.json
   def index
 
-    @patients = Patient.all
-    if params.include?(:gender) and !params[:gender].blank?
-      @patients = Patient.gender_vise(params[:gender])
-    end
+    # @patients = Patient.all
+    # if params.include?(:gender) and !params[:gender].blank?
+    #   @patients = Patient.gender_vise(params[:gender])
+    # end
+      @template = ReportTemplateMaster.first
+
   end
 
 

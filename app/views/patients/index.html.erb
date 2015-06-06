@@ -32,37 +32,52 @@ $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
 });
 </script>
 
+<%#= @template.report_masters.first.report_datas.map(&:column_name)%>
 
+<% query = @template.report_masters.first.report_sql.sql_query%>
+<%@patients = Patient.find_by_sql("select * from patients")%>
+<%header = @template.report_masters.first.report_header%>
+<div>
+
+  <span style="color:#142e64;font-size:24px;font-weight:bold"><%=header.main_header%></span><br>
+  <span style="font-size:20px;font-weight:bold"><%=header.header1%></span><br>
+  <div style="font-size:14px;font-weight:bold"><%=header.header2%></div><br>
+  <div style="color:#142e64;font-size:14px;font-weight:bold"><%=header.header3%></div>
+</div>
 
 <%- model_class = Patient -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <!-- <h1><%#=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1> -->
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:firstname) %></th>
-      <th><%= model_class.human_attribute_name(:lastname) %></th>
-      <th><%= model_class.human_attribute_name(:dob) %></th>
-      <th><%= model_class.human_attribute_name(:gender) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <% @template.report_masters.first.report_datas.map(&:column_name).each do |header|%>
+      <!-- <th><%#= model_class.human_attribute_name(:id) %></th> -->
+      <!-- <th><%#= model_class.human_attribute_name(:firstname) %></th> -->
+      <!-- <th><%#= model_class.human_attribute_name(:lastname) %></th> -->
+      <!-- <th><%#= model_class.human_attribute_name(:dob) %></th> -->
+      <!-- <th><%#= model_class.human_attribute_name(:gender) %></th> -->
+      <th><%= header%></th>
+      <!-- <th><%#=#t '.actions', :default => t("helpers.actions") %></th> -->
+      <%end%>
+
     </tr>
   </thead>
   <tbody>
-    <% @patients.each do |patient| %>
+     <%@patients.each do |patient|%> 
       <tr>
+        <%#=raise patient.inspect%>
         <td><%= link_to patient.id, patient_path(patient) %></td>
         <td><%= patient.firstname %></td>
         <td><%= patient.lastname %></td>
         <td><%= patient.dob %></td>
         <td><%= patient.gender %></td>
-        <td><%=l patient.created_at %></td>
+        <!-- <td><%#= patient.created_at %></td> -->
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+          <%#= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_patient_path(patient), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       patient_path(patient),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
