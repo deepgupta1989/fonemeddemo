@@ -6,18 +6,24 @@ class PatientsController < ApplicationController
   def index
 
     # @patients = Patient.all
-    # if params.include?(:gender) and !params[:gender].blank?
-    #   @patients = Patient.gender_vise(params[:gender])
-    # end
       @template = ReportTemplateMaster.first
+
+    # if params.include?(:from) 
+    #   @calls = Call.includes(:patient).where("call_received_at >= ? and call_received_at <= ? ", params[:from],params[:till] )
+    # end
+
       @calls = Call.includes(:patient).find_by_sql("select * from calls")
 
   end
 
 
   def filterd_by_date
-    @patients = Patient.where("created_at >= ? and created_at <= ?", params[:from], params[:till] ).order("id asc")
-    @show_import = true unless @patients.blank?
+    @template = ReportTemplateMaster.first
+    if params.include?(:from) 
+      @calls = Call.includes(:patient).where("call_received_at >= ? and call_received_at <= ? ", params[:from],params[:till] )
+    end
+
+    @show_import = true unless @calls.blank?
     render 'index'
   end
 
@@ -63,6 +69,10 @@ class PatientsController < ApplicationController
         format.json { render json: @patient.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def generate_pdf
+    render :nothing => true, :status => 200
   end
 
   # DELETE /patients/1

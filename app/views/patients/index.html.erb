@@ -3,62 +3,41 @@
 <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
 
-<!-- <form action="<%= patients_path%>">
-  <%#= select_tag "gender", options_for_select([["Select" , "" ]] + ['Male', 'Female']) %>
-  <button class="btn btn-primary">Get Data</button>
-</form> -->
-<!-- <hr> -->
 
-
-<form action="<%= filterd_by_date_patients_path%>">
-  <input type="text" name="from" id="datepicker1" placeholder="From Date">
-  <input type="text" name="till" id="datepicker" placeholder="To Date">
-  <button class="btn btn-primary m_bottom10">Get Data</button>
-</form>
+<%= form_tag(filterd_by_date_patients_path,{:method => :get}) do %>
+  <%= text_field_tag :from,params[:from],id: 'datepicker', placeholder: 'From'%>
+  <%= text_field_tag :till,params[:till], id: 'datepicker1', placeholder: 'To'%>
+  <%= submit_tag 'Get Data', class: 'btn btn-primary m_bottom10'%> 
+<% end %>
 
 <%if @show_import%>
-<form class="">
-  <label>Select a formate to Import</label>
-  <%= select_tag "import_to", options_for_select([["Select" , "" ]] + ['pdf', 'csv','excel', 'json']) %>
-  <button class="btn btn-success m_bottom10">Import</button>
-</form>
+  <%= form_tag(generate_pdf_patients_path,{:method => :get}) do %>
+    <%= select_tag "import_to", options_for_select([["Select" , "" ]] + ['pdf', 'csv','excel', 'json']) %>
+    <%= submit_tag 'Import', class: 'btn btn-danger m_bottom10'%> 
+  <% end %>
+
+  <div class="pull-right">
+    <span class="date_font_size">From: <%= params[:from]%></span><br>
+    <span class="date_font_size">To: <%= params[:till]%></span>
+  </div>
 <%end%>
-
-
-<script>
-  $(function() {
-    $( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-    $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-  });
-</script>
-
-<%#= @template.report_masters.first.report_datas.map(&:column_name)%>
 
 <% query = @template.report_masters.first.report_sql.sql_query%>
 <%header = @template.report_masters.first.report_header%>
+<hr>
 <div>
-<%#= header.style%>
   <div style="<%=header.main_header_style%>"><%=header.main_header%></div><br>
   <!-- <span style="font-size:20px;font-weight:bold"><%#=header.header1%></span><br> -->
   <div style="font-size:17px;font-weight:bold"><%=header.header2%></div><br>
   <div style="<%= header.header3_style%>"><%=header.header3%></div>
 </div>
 
-<%- model_class = Patient -%>
-<div class="page-header">
-  <!-- <h1><%#=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1> -->
-</div>
+<br>
 <table class="table table-striped">
-  <thead>
+  <thead style="<%=header.table_header_style%>">
     <tr>
       <% @template.report_masters.first.report_datas.order("id asc").map(&:column_name).each do |header|%>
-      <!-- <th><%#= model_class.human_attribute_name(:id) %></th> -->
-      <!-- <th><%#= model_class.human_attribute_name(:firstname) %></th> -->
-      <!-- <th><%#= model_class.human_attribute_name(:lastname) %></th> -->
-      <!-- <th><%#= model_class.human_attribute_name(:dob) %></th> -->
-      <!-- <th><%#= model_class.human_attribute_name(:gender) %></th> -->
-      <th><%= header%></th>
-      <!-- <th><%#=#t '.actions', :default => t("helpers.actions") %></th> -->
+      <th><%= header.capitalize%></th>
       <%end%>
 
     </tr>
@@ -68,23 +47,24 @@
       <tr>
         <td><%= call.callerid %></td>
         <td><%= call.patient.firstname %></td>
-        <td><%= call.patient.dob %></td>
-        <td><%= call.call_received_at.strftime("%d/%m/%Y %r") %></td>
+        <td><%= call.patient.dob.strftime("%m/%d/%Y") %></td>
+        <td><%= call.call_received_at.strftime("%m/%d/%Y %r") %></td>
         <td><%= call.calltype %></td>
-        <td>
-          <%#= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_patient_path(patient), :class => 'btn btn-mini' %>
-          <%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      patient_path(patient),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<%#= link_to t('.new', :default => t("helpers.links.new")),
             new_patient_path,
             :class => 'btn btn-primary' %>
+
+<script>
+  $(function() {
+    $( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
+    $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
+  });
+</script>
+
+
+
