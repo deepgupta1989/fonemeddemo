@@ -10,6 +10,7 @@ class PatientsController < ApplicationController
     #   @patients = Patient.gender_vise(params[:gender])
     # end
       @template = ReportTemplateMaster.first
+      @calls = Call.includes(:patient).find_by_sql("select * from calls")
 
   end
 

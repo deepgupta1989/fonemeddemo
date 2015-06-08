@@ -26,23 +26,22 @@
 
 
 <script>
-$(function() {
-$( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-$( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-});
+  $(function() {
+    $( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
+    $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
+  });
 </script>
 
 <%#= @template.report_masters.first.report_datas.map(&:column_name)%>
 
 <% query = @template.report_masters.first.report_sql.sql_query%>
-<%@patients = Patient.find_by_sql("select * from patients")%>
 <%header = @template.report_masters.first.report_header%>
 <div>
-
-  <span style="color:#142e64;font-size:24px;font-weight:bold"><%=header.main_header%></span><br>
-  <span style="font-size:20px;font-weight:bold"><%=header.header1%></span><br>
-  <div style="font-size:14px;font-weight:bold"><%=header.header2%></div><br>
-  <div style="color:#142e64;font-size:14px;font-weight:bold"><%=header.header3%></div>
+<%#= header.style%>
+  <div style="<%=header.main_header_style%>"><%=header.main_header%></div><br>
+  <!-- <span style="font-size:20px;font-weight:bold"><%#=header.header1%></span><br> -->
+  <div style="font-size:17px;font-weight:bold"><%=header.header2%></div><br>
+  <div style="<%= header.header3_style%>"><%=header.header3%></div>
 </div>
 
 <%- model_class = Patient -%>
@@ -52,7 +51,7 @@ $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
 <table class="table table-striped">
   <thead>
     <tr>
-      <% @template.report_masters.first.report_datas.map(&:column_name).each do |header|%>
+      <% @template.report_masters.first.report_datas.order("id asc").map(&:column_name).each do |header|%>
       <!-- <th><%#= model_class.human_attribute_name(:id) %></th> -->
       <!-- <th><%#= model_class.human_attribute_name(:firstname) %></th> -->
       <!-- <th><%#= model_class.human_attribute_name(:lastname) %></th> -->
@@ -65,15 +64,13 @@ $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
     </tr>
   </thead>
   <tbody>
-     <%@patients.each do |patient|%> 
+     <%@calls.each do |call|%> 
       <tr>
-        <%#=raise patient.inspect%>
-        <td><%= link_to patient.id, patient_path(patient) %></td>
-        <td><%= patient.firstname %></td>
-        <td><%= patient.lastname %></td>
-        <td><%= patient.dob %></td>
-        <td><%= patient.gender %></td>
-        <!-- <td><%#= patient.created_at %></td> -->
+        <td><%= call.callerid %></td>
+        <td><%= call.patient.firstname %></td>
+        <td><%= call.patient.dob %></td>
+        <td><%= call.call_received_at.strftime("%d/%m/%Y %r") %></td>
+        <td><%= call.calltype %></td>
         <td>
           <%#= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_patient_path(patient), :class => 'btn btn-mini' %>
