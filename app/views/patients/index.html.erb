@@ -1,32 +1,54 @@
-
-<%= form_tag(filterd_by_date_patients_path,{:method => :get}) do %>
-  <%= text_field_tag :from,params[:from],id: 'datepicker', placeholder: 'From'%>
-  <%= text_field_tag :till,params[:till], id: 'datepicker1', placeholder: 'To'%>
-  <%= submit_tag 'Get Data', class: 'btn btn-primary m_bottom10'%> 
-<% end %>
-
-<%if @show_import%>
-  <%= form_tag(generate_pdf_patients_path,{:method => :get}) do %>
-    <%= select_tag "import_to", options_for_select([["Select" , "" ]] + ['pdf', 'csv','excel', 'json']) %>
-    <%= submit_tag 'Import', class: 'btn btn-danger m_bottom10'%> 
-  <% end %>
-
-  <div class="pull-right">
-    <span class="date_font_size">From: <%= params[:from]%></span><br>
-    <span class="date_font_size">To: <%= params[:till]%></span>
+<div class="span5">
+  <div class="well sidebar-nav">
+    <h3>Search</h3>
+    <%= form_tag(filterd_by_date_patients_path,{:method => :get}) do %>
+      <div class='form-group'>
+        <%= label_tag :from%>
+        <%= text_field_tag :from,params[:from],id: 'datepicker', placeholder: 'From'%>
+      </div>
+      <div class='form-group'>
+        <%= label_tag :till%>
+        <%= text_field_tag :till,params[:till], id: 'datepicker1', placeholder: 'To'%>
+      </div>
+      <%= button_tag 'Reset', type: 'reset', class: 'btn btn-danger m_bottom10'%>
+      <%= submit_tag 'Get Data', class: 'btn btn-primary m_bottom10'%> 
+    <% end %>
   </div>
-<%end%>
+</div>
 
-<% query = @template.report_masters.first.report_sql.sql_query%>
+
+<div class="row">
+  <div class="span9">
+  <div class"span4">
+  <%if @show_import%>
+
+    <div class="pull-right"><br>
+      <span class="date_font_size">From: <%= params[:from]%></span><br>
+      <span class="date_font_size">To: <%= params[:till]%></span>
+    </div>
+</div>
+
+
+<div class="span3 offset6">
+    <%= form_tag(generate_pdf_patients_path,{:method => :get}) do %>
+      <%= select_tag 'import_to', options_for_select([["Select" , "" ]] + ['pdf', 'csv','excel', 'json']) %>
+      <%= submit_tag 'Import', class: 'btn btn-danger m_bottom10'%> 
+    <% end %>
+</div>
+  <%end%>
+
+
+
+  <hr>
+<%# query = @template.report_masters.first.report_sql.sql_query%>
 <%header = @template.report_masters.first.report_header%>
-<hr>
+
 <div>
   <div style="<%=header.main_header_style%>"><%=header.main_header%></div><br>
   <!-- <span style="font-size:20px;font-weight:bold"><%#=header.header1%></span><br> -->
   <div style="font-size:17px;font-weight:bold"><%=header.header2%></div><br>
   <div style="<%= header.header3_style%>"><%=header.header3%></div>
 </div>
-
 <br>
 <table class="table table-striped">
   <thead style="<%=header.table_header_style%>">
@@ -34,7 +56,6 @@
       <% @template.report_masters.first.report_datas.order("id asc").map(&:column_name).each do |header|%>
       <th><%= header.capitalize%></th>
       <%end%>
-
     </tr>
   </thead>
   <tbody>
@@ -49,17 +70,9 @@
     <% end %>
   </tbody>
 </table>
+</div>
+</div>
 
 <%#= link_to t('.new', :default => t("helpers.links.new")),
             new_patient_path,
             :class => 'btn btn-primary' %>
-
-<script>
-  $(function() {
-    $( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-    $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-  });
-</script>
-
-
-
