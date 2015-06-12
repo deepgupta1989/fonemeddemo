@@ -17,7 +17,3 @@
 //= require turbolinks
 //= require_tree .
 
-$(function() {
-  $( "#datepicker1" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-  $( "#datepicker" ).datepicker({ dateFormat: 'mm-dd-yy' }).val();
-});

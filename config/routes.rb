@@ -2,6 +2,8 @@ FonemedPdf::Application.routes.draw do
   resources :patients do
     collection do
       get 'filterd_by_date'
+      get 'generate_pdf'
+      get 'demo_page'
     end
   end
 
