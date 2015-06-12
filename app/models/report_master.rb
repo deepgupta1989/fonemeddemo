@@ -1,5 +1,5 @@
 class ReportMaster < ActiveRecord::Base
-  belongs_to :report_template_master
+  has_many :report_template_masters
   has_many :report_datas
   has_many :report_filters
   has_one :report_header

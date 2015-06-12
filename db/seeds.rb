@@ -1,3 +1,4 @@
+# 
 # b = 10000000
 # Patient.create(:firstname => "KendraLoudDeloitte",:lastname => Faker::Internet.user_name,:dob =>  Time.at(rand(999999400) + b))
 # Patient.create(:firstname => "LourdesBauswellOklahoma",:lastname => Faker::Internet.user_name,:dob =>  Time.at(rand(999999400) + b))
@@ -113,53 +114,50 @@
 
 # # Patient.createcreate(:firstname => ,:dob =:lastname => Faker::Internet.user_name,>  Time.at(rand(999999400) + b))
 
+
+# typee = ["Administration", "Information", "Triage", "Triage"]
+
 # for i in 1..250
 #  length = (rand(18) + rand(0.9)).round(1)
 # # sd = Time.at(rand(140000000) + 1319500000)
-# Call.create(:patient_id => rand(111) , :length => length,:callerid => rand(20000000) + 964000)
+# Call.create(:calltype=> typee[rand 3]:patient_id => rand(111) , :length => length,:callerid => rand(20000000) + 964000)
 # end
 # # Time.at(rand(140000000) + 1319500000)
 
 
+#Template 1
 
+# ReportTemplateMaster.create(:template_name => "New_AfterHoursCallerListCST",:status => 1,:created_by => "admin",:updated_by=> "admin")
 
-ReportTemplateMaster.create(:template_name => "New_AfterHoursCallerListCST",:status => 1,:created_by => "admin",:updated_by=> "admin")
+# ReportMaster.create(:report_name =>"New_AfterHoursCallerListCST",:status =>1,:report_template_master_id => 1,:created_by=> "admin",:updated_by=> "admin")
+# ReportMaster.create(:report_name =>"New_AfterHoursCallerListCST_RemPatInfo",:status =>1,:report_template_master_id => 1,:created_by=> "admin",:updated_by=> "admin")
+# ReportMaster.create(:report_name =>"New_CallCountByCallType",:status =>1,:report_template_master_id => 1,:created_by=> "admin",:updated_by=> "admin")
 
-ReportMaster.create(:report_name =>"New_AfterHoursCallerListCST",:status =>1,:report_template_master_id => 1,:created_by=> "admin",:updated_by=> "admin")
-ReportMaster.create(:report_name =>"New_AfterHoursCallerListCST_RemPatInfo",:status =>1,:report_template_master_id => 1,:created_by=> "admin",:updated_by=> "admin")
-ReportMaster.create(:report_name =>"New_CallCountByCallType",:status =>1,:report_template_master_id => 1,:created_by=> "admin",:updated_by=> "admin")
-
-ReportData.create(:report_master_id => 1,:column_name =>"callerid",:column_datatype => "Integer",:sequence => 1,:column_style=>"",:column_display_name => "callId")
-ReportData.create(:report_master_id => 1,:column_name =>"firstname",:column_datatype => "String",:sequence => 2,:column_style=>"",:column_display_name => "Name")
-ReportData.create(:report_master_id => 1,:column_name =>"dob",:column_datatype => "Date",:sequence => 3,:column_style=>"",:column_display_name => "DOB")
-ReportData.create(:report_master_id => 1,:column_name =>"CallReceivedCT",:column_datatype => "Datetime",:sequence => 4,:column_style=>"",:column_display_name => "Call Received CT")
-ReportData.create(:report_master_id => 1,:column_name =>"calltype",:column_datatype => "string",:sequence => 5,:column_style=>"",:column_display_name => "Call Type")
-
+# ReportData.create(:report_master_id => 1,:column_name =>"callerid",:column_datatype => "Integer",:sequence => 1,:column_style=>"",:column_display_name => "callId")
+# ReportData.create(:report_master_id => 1,:column_name =>"firstname",:column_datatype => "String",:sequence => 2,:column_style=>"",:column_display_name => "Name")
+# ReportData.create(:report_master_id => 1,:column_name =>"dob",:column_datatype => "Date",:sequence => 3,:column_style=>"",:column_display_name => "DOB")
+# ReportData.create(:report_master_id => 1,:column_name =>"CallReceivedCT",:column_datatype => "Datetime",:sequence => 4,:column_style=>"",:column_display_name => "Call Received CT")
+# ReportData.create(:report_master_id => 1,:column_name =>"calltype",:column_datatype => "string",:sequence => 5,:column_style=>"",:column_display_name => "Call Type")
 
 
 
 ReportFilter.create(:report_master_id=> 1,:field_name => "callerid",:mandatory => 1)
 ReportFilter.create(:report_master_id=> 1,:field_name => "calltype",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 1,:field_name => "length",:mandatory => 1)
+ReportFilter.create(:report_master_id=> 2,:field_name => "length",:mandatory => 1)
 
-ReportFilter.create(:report_master_id=> 1,:field_name => "firstname",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 1,:field_name => "lastname",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 1,:field_name => "gender",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 1,:field_name => "dob",:mandatory => 1)
+ReportFilter.create(:report_master_id=> 2,:field_name => "firstname",:mandatory => 1)
+ReportFilter.create(:report_master_id=> 2,:field_name => "lastname",:mandatory => 1)
+ReportFilter.create(:report_master_id=> 3,:field_name => "gender",:mandatory => 1)
+ReportFilter.create(:report_master_id=> 4,:field_name => "dob",:mandatory => 1)
 
     
-ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)",:header1 =>"Patient Information Excluded",:header2=> "17th and Chew - Lehigh Valley Physician Practice ~ ET",:header3=> "17th and Chew - Lehigh Valley Physician Practice",:repeat_header => 0)
+# ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)",:header1 =>"Patient Information Excluded",:header2=> "17th and Chew - Lehigh Valley Physician Practice ~ ET",:header3=> "17th and Chew - Lehigh Valley Physician Practice",:repeat_header => 0)
 
-ReportSql.create(:status =>1,:report_master_id=>1,:created_by=>'admin')
-ReportSql.create(:status =>1,:report_master_id=>1,:created_by=>'admin')
-ReportSql.create(:status =>1,:report_master_id=>1,:created_by=>'admin')
+# ReportSql.create(:status =>1,:report_master_id=>1,:created_by=>'admin')
+# ReportSql.create(:status =>1,:report_master_id=>1,:created_by=>'admin')
+# ReportSql.create(:status =>1,:report_master_id=>1,:created_by=>'admin')
     
 
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)")
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)")
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)")
-
-
-
-
-

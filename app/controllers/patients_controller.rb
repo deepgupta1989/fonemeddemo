@@ -4,23 +4,17 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-
-    # @patients = Patient.all
-      @template = ReportTemplateMaster.first
-
-    # if params.include?(:from) 
-    #   @calls = Call.includes(:patient).where("call_received_at >= ? and call_received_at <= ? ", params[:from],params[:till] )
-    # end
-
-      @calls = Call.includes(:patient).find_by_sql("select * from calls")
-
+    @report = ReportMaster.first
+    @report_filters = ReportMaster.first.report_filters
+    @calls = []#Call.includes(:patient).find_by_sql("select * from calls")
   end
 
 
   def filterd_by_date
-    @template = ReportTemplateMaster.first
-    if params.include?(:from) 
-      @calls = Call.includes(:patient).where("call_received_at >= ? and call_received_at <= ? ", params[:from],params[:till] )
+    @report = ReportMaster.first
+    @report_filters = ReportMaster.first.report_filters
+    if params.include?(:FromDate) 
+      @calls = Call.includes(:patient).where(ReportSql.first.sql_query.to_s, params[:FromDate],params[:ToDate] )
     end
 
     @show_import = true unless @calls.blank?
@@ -83,6 +77,10 @@ class PatientsController < ApplicationController
       format.html { redirect_to patients_url }
       format.json { head :no_content }
     end
+  end
+
+  def demo_page
+    @template = ReportTemplateMaster.where(:id => [2,3,4])
   end
 
   private
