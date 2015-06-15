@@ -141,14 +141,14 @@
 
 
 
-ReportFilter.create(:report_master_id=> 1,:field_name => "callerid",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 1,:field_name => "calltype",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 2,:field_name => "length",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 1,:field_name => "callerid",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 1,:field_name => "calltype",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 2,:field_name => "length",:mandatory => 1)
 
-ReportFilter.create(:report_master_id=> 2,:field_name => "firstname",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 2,:field_name => "lastname",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 3,:field_name => "gender",:mandatory => 1)
-ReportFilter.create(:report_master_id=> 4,:field_name => "dob",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 2,:field_name => "firstname",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 2,:field_name => "lastname",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 3,:field_name => "gender",:mandatory => 1)
+# ReportFilter.create(:report_master_id=> 4,:field_name => "dob",:mandatory => 1)
 
     
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)",:header1 =>"Patient Information Excluded",:header2=> "17th and Chew - Lehigh Valley Physician Practice ~ ET",:header3=> "17th and Chew - Lehigh Valley Physician Practice",:repeat_header => 0)
@@ -161,3 +161,13 @@ ReportFilter.create(:report_master_id=> 4,:field_name => "dob",:mandatory => 1)
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)")
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)")
 # ReportHeader.create(:report_master_id => 1,:main_header => "After Hours Caller List (CST)")
+
+ReportTemplateMaster.create(:html_content => "<div class='header-class'></div>")
+ReportTemplateMaster.create(:html_content => "<div class='content-class'></div>")
+ReportTemplateMaster.create(:html_content => "<div class='footer-content'></div>")
+ReportTemplateMaster.create(:template_name => "headr1", :html_content => '<div><div>After Hours Caller List (CST)</div><br><div>17th and Chew - Lehigh Valley Physician Practice ~ ET</div><br><div style="">17th and Chew - Lehigh Valley Physician Practice</div></div>', :parent_id => 2 )
+
+ReportTemplateMaster.create(:html_content => "<table></table>", :parent_id => 3)
+ReportTemplateMaster.create(:html_content => "<tr></tr>", :parent_id => 6)
+ReportTemplateMaster.create(:html_content => "<td></td>", :parent_id => 7)
+ReportTemplateMaster.create(:html_content => "<th></th>", :parent_id => 7)

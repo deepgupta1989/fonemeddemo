@@ -81,6 +81,8 @@ class PatientsController < ApplicationController
 
   def demo_page
     @template = ReportTemplateMaster.where(:id => [2,3,4])
+    @calls = Call.all.select("callerid, patient_id, created_at, updated_at, calltype") #.includes(:patient).where(ReportSql.first.sql_query.to_s, params[:FromDate],params[:ToDate] )
+    
   end
 
   private
