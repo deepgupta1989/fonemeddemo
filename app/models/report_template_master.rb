@@ -1,8 +1,7 @@
 class ReportTemplateMaster < ActiveRecord::Base
   self.table_name = "templates"
   belongs_to :report_master
-  
-	
+  has_many :css_classes, foreign_key: :template_id
 
   # followee_follows "names" the Follow join table for accessing through the followee association
   has_many :children, foreign_key: :parent_id, class_name: "ReportTemplateMaster"    
